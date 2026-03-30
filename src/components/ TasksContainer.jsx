@@ -26,7 +26,11 @@ export const TasksContainer = ({
                     toggleComplete(task.id);
                   }}
                 />
-                <p>{task.taskName}</p>
+                <p
+                  className={`${task.isCompleted ? "line-through text-gray-500" : "text-gray-700"}`}
+                >
+                  {task.taskName}
+                </p>
               </div>
               <button
                 onClick={() => handleDelete(index)}
