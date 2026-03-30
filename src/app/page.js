@@ -5,7 +5,7 @@ import { TasksContainer } from "@/components/ TasksContainer";
 import { useState } from "react";
 import { Footer } from "@/components/Footer";
 import { TaskCounter } from "@/components/TaskCounter";
-import { EmptyClick } from "@/components/EmptyClick";
+import { AddButton } from "@/components/AddButton";
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -25,11 +25,11 @@ export default function Home() {
       setTasks(newTasks);
     }
   };
-  const emptyClick = () => {
+  const handleAdd = () => {
     if (inputValue.trim() === "") {
       return;
     }
-    handleClick("");
+    handleClick();
   };
   const toggleComplete = (id) => {
     const updatedTasks = tasks.map((task) => {
@@ -65,7 +65,7 @@ export default function Home() {
             "
             placeholder="Add a new task..."
           />
-          <EmptyClick emptyClick={emptyClick} />
+          <AddButton handleAdd={handleAdd} />
         </div>
         <Buttons status={status} setStatus={setStatus} />
         <TasksContainer
