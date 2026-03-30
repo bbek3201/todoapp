@@ -1,7 +1,11 @@
 "use client";
 import { Buttons } from "@/components/Buttons";
 import { Input } from "@/components/Input";
+import { TasksContainer } from "@/components/ TasksContainer";
 import { useState } from "react";
+import { Footer } from "@/components/Footer";
+import { TaskCounter } from "@/components/TaskCounter";
+import { EmptyClick } from "@/components/EmptyClick";
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -16,13 +20,13 @@ export default function Home() {
     setInputValue("");
   };
   const handleDelete = (index) => {
-    if (window.confirm("are you sure?")) {
+    if (window.confirm("Are you sure?")) {
       const newTasks = tasks.filter((_, i) => i !== index);
       setTasks(newTasks);
     }
   };
   const emptyClick = () => {
-    if (!inputValue.trim() === "") {
+    if (inputValue.trim() === "") {
       return;
     }
     handleClick("");
@@ -43,7 +47,7 @@ export default function Home() {
     return true;
   });
   const deleteCompleteTasks = () => {
-    if (window.confirm("are you sure?")) {
+    if (window.confirm("Are you sure?")) {
       const activeTasks = tasks.filter((task) => !task.isCompleted);
       setTasks(activeTasks);
     }
@@ -61,74 +65,21 @@ export default function Home() {
             "
             placeholder="Add a new task..."
           />
-          <button
-            onClick={emptyClick}
-            className="h-10 bg-blue-500 p-4 text-white justify-center flex items-center rounded-[6px] hover:bg-blue-400 hover:scale-110"
-          >
-            Add
-          </button>
+          <EmptyClick emptyClick={emptyClick} />
         </div>
         <Buttons status={status} setStatus={setStatus} />
-        <div className=" w-[300px]  flex flex-col gap-2.5">
-          {filteredTasks.map((task, index) => {
-            return (
-              <div
-                key={task.id || index}
-                className="flex justify-between
-               items-center bg-slate-100 p-3 rounded-md hover:scale-102"
-              >
-                <div
-                  className="flex
-                 gap-1.5 hover:scale-110"
-                >
-                  <input
-                    type="checkbox"
-                    checked={task.isCompleted}
-                    onChange={() => {
-                      toggleComplete(task.id);
-                    }}
-                  />
-
-                  <p>{task.taskName}</p>
-                </div>
-                <button
-                  onClick={() => handleDelete(index)}
-                  className="text-red-400 w-15 h-10 bg-red-100 border rounded-2xl hover:scale-110"
-                >
-                  delete
-                </button>
-              </div>
-            );
-          })}
-        </div>
+        <TasksContainer
+          filteredTasks={filteredTasks}
+          handleDelete={handleDelete}
+          toggleComplete={toggleComplete}
+        />
         {tasks.length === 0 && (
-          <div className="text-gray-500 flex">
+          <div className="text-gray-400 flex">
             <p>No task yet.Add one above.</p>
           </div>
         )}
-
-        <div className="flex justify-between gap-19 border-t-2 border-gray-300 w-[340px] pt-[16px]">
-          <p className="pl-5 text-gray-500">
-            {tasks.filter((t) => t.isCompleted).length} of {tasks.length}
-            is complete
-          </p>
-
-          {tasks.length > 0 && (
-            <button
-              onClick={deleteCompleteTasks}
-              className="text-red-400 hover:scale-105"
-            >
-              Clear completed
-            </button>
-          )}
-        </div>
-
-        <div className="flex pt-10 pb-6 text-[12px] gap-1">
-          <p>Powered by</p>
-          <a href="https://pinecone.mn/" className="text-blue-500">
-            Pinecone Academy
-          </a>
-        </div>
+        <TaskCounter tasks={tasks} deleteCompleteTasks={deleteCompleteTasks} />
+        <Footer />
       </div>
     </div>
   );
