@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div className="w-full h-screen flex  flex-col items-center gap-[60] bg-white justify-center">
       <div className="text-black w-[400px] h-fit flex flex-col bg-white  items-center shadow-2xl gap-5 justify-center hover:scale-102 rounded-md">
-        <h1 className="text-[20px] font-serif pt-6 ">To-Do list</h1>
+        <h1 className="text-[25px] font-serif pt-6 font-bold ">To-Do list</h1>
         <div className="flex gap-1.5">
           <Input
             inputValue={inputValue}
